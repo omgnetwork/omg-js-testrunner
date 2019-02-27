@@ -8,6 +8,9 @@ USER omg
 
 COPY . /home/omg/
 WORKDIR /home/omg/
+
+RUN git clone https://github.com/omisego/omg-js.git
+
 RUN npm install
 
 ENTRYPOINT ["npm", "run", "start"]
