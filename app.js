@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const runner = require('./testRunner')
 const crypto = require('crypto')
+require('log-timestamp')
 
 const port = process.env.TESTRUNNER_PORT || 3333
 
