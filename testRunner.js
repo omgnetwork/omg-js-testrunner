@@ -1,6 +1,7 @@
 
 const { spawn } = require('child_process')
 const JobList = require('./fixedList')
+require('log-timestamp')
 
 const jobs = new JobList(5)
 
