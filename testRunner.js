@@ -1,5 +1,6 @@
 
 const { spawn } = require('child_process')
+const process = require('process');
 const JobList = require('./fixedList')
 require('log-timestamp')
 
@@ -14,26 +15,30 @@ function start (jobdesc) {
   }
   jobs.add(job)
 
-  const process = spawn(jobdesc.command, jobdesc.args, { cwd: jobdesc.cwd, env: jobdesc.env })
+  // Let jobdesc.env vars override any in vars the default env
+  const jobEnv = {...process.env};
+  Object.assign(jobEnv, jobdesc.env);
+
+  const childProcess = spawn(jobdesc.command, jobdesc.args, { cwd: jobdesc.cwd, env: jobEnv })
   job.status = 'Started'
-  job.process = process
-  process.stdout.on('data', (data) => {
+  job.process = childProcess
+  childProcess.stdout.on('data', (data) => {
     job.stdout += data
     console.log(`stdout: ${data}`)
   })
 
-  process.stderr.on('data', (data) => {
+  childProcess.stderr.on('data', (data) => {
     job.stderr += data
     console.error(`stderr: ${data}`)
   })
 
-  process.on('exit', (code) => {
+  childProcess.on('exit', (code) => {
     job.code = code
     job.status = `Exited`
     console.log(`Exited: ${code}`)
   })
 
-  process.on('error', (err) => {
+  childProcess.on('error', (err) => {
     job.status = `Failed to start: ${err}`
     console.error(err)
   })
