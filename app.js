@@ -6,7 +6,7 @@ require('log-timestamp')
 
 const port = process.env.TESTRUNNER_PORT || 3333
 
-const ALLOWED_COMMANDS = ['npm']
+const ALLOWED_COMMANDS = ['npm', 'git']
 
 const app = express()
 app.use(bodyParser.json())
@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.post('/job', (req, res) => {
   if (!ALLOWED_COMMANDS.includes(req.body.job.command)) {
     res.status(422)
-    res.send(`Command ${req.body.job.command} is not allowed`)
+    res.send(`Command '${req.body.job.command}' is not allowed`)
     return
   }
 
