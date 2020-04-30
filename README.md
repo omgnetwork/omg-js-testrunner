@@ -1,5 +1,6 @@
 # omg-js-testrunner
-Simple node service to run test jobs. Stores the results of the last 5 jobs in memory.
+Simple node service to run test jobs. The job can specify an npm script to run. 
+Stores the results of the last 5 jobs in memory.
 
 # API
 
@@ -9,9 +10,7 @@ POST http://localhost:3333/job
 {
 	"job": {
 		"id": "a6ff00e9feb18400551fef6c3e5900df",
-		"command": "npm",
-		"args": ["run", "integration-test"],
-		"cwd": "/Users/kevin/work/omg/omg-js"
+		"script": "integration-test"
 	}
 }
 ```
