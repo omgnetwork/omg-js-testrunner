@@ -1,19 +1,11 @@
 FROM node:10-alpine
 
-RUN apk update && apk add shadow git python g++ make
+RUN apk update && apk add shadow git python g++ make curl
 
-RUN useradd -ms /bin/bash omg
-
-USER omg
-
-COPY . /home/omg/
-
-WORKDIR /home/omg/
+WORKDIR /app
 
 RUN git clone https://github.com/omisego/omg-js.git
 
-RUN cd /home/omg/omg-js/ && npm install
+RUN cd omg-js && npm install
 
-RUN cd /home/omg/ && npm install
-
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "run", "ci-baseline-test"]

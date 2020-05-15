@@ -1,47 +1,22 @@
 # omg-js-testrunner
-Simple node service to run test jobs. Stores the results of the last 5 jobs in memory.
 
-# API
+Simple Dockerfile file to run omg integration tests
 
-## Run a test job
-POST http://localhost:3333/job
+
+## Environment Variables
 ```
-{
-	"job": {
-		"id": "a6ff00e9feb18400551fef6c3e5900df",
-		"command": "npm",
-		"args": ["run", "integration-test"],
-		"cwd": "/Users/kevin/work/omg/omg-js"
-	}
-}
-```
-If no `id` is passed it will generate one.
-Returns the job id e.g. `a6ff00e9feb18400551fef6c3e5900df`
-
-
-## Get the status of a test job
-GET http://localhost:3333/job/:id/status
-
-Returns one of:
-- `Starting`
-- `Failed to start: error`
-- `Started`
-- `Exited`
-
-
-## Check if the test job succeeded
-GET http://localhost:3333/job/:id/success
-
-Returns `true` if the tests passed (i.e. exited with code 0), `false` otherwise.
-
-
-## Get the job's output
-GET http://localhost:3333/job/:id/output
-
-Returns both stdout and stderr
-```
-{
-    "stdout": "omg-js@0.1.0 integration-test...",
-    "stderr": "npm ERR! ..."
-}
+ETH_NODE=                           <entry point to an ethereum node>
+WATCHER_URL=                        <url of an informational watcher (watcher-info)>
+WATCHER_PROXY_URL=                  <*optional* proxy server to catch all watcher requests>
+CHILDCHAIN_URL=                     <childchain url>
+PLASMAFRAMEWORK_CONTRACT_ADDRESS=   <address of the plasma_framework contract>
+ERC20_CONTRACT_ADDRESS=             <*optional* address of the erc20 contract that Alice will deposit and transfer to Bob>
+FUND_ACCOUNT=                       <address of the funding account>
+FUND_ACCOUNT_PRIVATEKEY=            <private key of the funding account>
+MILLIS_TO_WAIT_FOR_NEXT_BLOCK=      <interval when checking for block confirmation>
+BLOCKS_TO_WAIT_FOR_TXN=             <amount of blocks to wait for confirmation>
+MIN_AMOUNT_ETH_PER_TEST=            <minimum amount of eth per test>
+MIN_AMOUNT_ERC20_PER_TEST=          <minimum amount of erc20 per test>
+TOPUP_MULTIPLIER=                   <topup multiplier>
+FAUCET_SALT=                        <random salt for the faucet>
 ```
