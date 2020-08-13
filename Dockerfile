@@ -10,4 +10,4 @@ RUN cd omg-js/ && echo "using omg-js sha: $(git rev-parse HEAD)"
 
 RUN cd omg-js && npm install
 
-ENTRYPOINT ["npm", "run", "ci-baseline-test"]
+WORKDIR /app/omg-js
