@@ -11,6 +11,7 @@ Simple Dockerfile file to run omg integration tests
 ```
 ETH_NODE=                           <entry point to an ethereum node>
 WATCHER_URL=                        <url of an informational watcher (watcher-info)>
+WATCHER_SECURITY_URL=               <*optional* url of an security watcher (watcher-security or watcher)>
 WATCHER_PROXY_URL=                  <*optional* proxy server to catch all watcher requests>
 CHILDCHAIN_URL=                     <childchain url>
 PLASMAFRAMEWORK_CONTRACT_ADDRESS=   <address of the plasma_framework contract>
