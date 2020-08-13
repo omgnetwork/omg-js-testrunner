@@ -1,6 +1,12 @@
 # omg-js-testrunner
-Simple node service to run test jobs. The job can specify an npm script to run. 
+Simple node service to run test jobs. The job can specify an npm script to run.
 Stores the results of the last 5 jobs in memory.
+
+# Run with docker
+1. First specify the omg-js git sha that you would like to use in file [OMG_JS_SHA](./OMG_JS_SHA)
+1. To build the test runner image, run: `docker build -t testrunner .`
+1. You can now run with docker: `docker run -it testrunner`
+
 
 # API
 
