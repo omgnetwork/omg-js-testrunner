@@ -12,7 +12,7 @@ workflows:
           filters:
             branches:
               only:
-                - boolafish/base_upon_revamp_branch
+                - master
 
 jobs:
   publish:
@@ -23,7 +23,7 @@ jobs:
           name: publish to GCP container registry
           command: |
             GIT_COMMIT_SHA=$(git rev-parse HEAD)
-            TEST_RUNNER_TAG=gcr.io/omisego-development/omg-js-testrunner:dev-boolafish-testrunner-$GIT_COMMIT_SHA
+            TEST_RUNNER_TAG=gcr.io/omisego-development/omg-js-testrunner:omg-js-testrunner-$GIT_COMMIT_SHA
 
             echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
             gcloud -q auth configure-docker
@@ -32,7 +32,7 @@ jobs:
             docker tag testrunner $TEST_RUNNER_TAG
             docker push $TEST_RUNNER_TAG
 
-            # add tag for omg-js sha
+            # add tag for omg-js sha that this image is using
             gcloud container images add-tag \
             $TEST_RUNNER_TAG \
-            gcr.io/omisego-development/omg-js-testrunner:dev-boolafish-omg-js-$(cat ./OMG_JS_SHA)
+            gcr.io/omisego-development/omg-js-testrunner:with-omg-js-$(cat ./OMG_JS_SHA)
