@@ -22,8 +22,9 @@ jobs:
       - run:
           name: publish to GCP container registry
           command: |
-            GIT_COMMIT_SHA=$(git rev-parse HEAD)
-            TEST_RUNNER_TAG=gcr.io/omisego-development/omg-js-testrunner:omg-js-testrunner-$GIT_COMMIT_SHA
+            GIT_SHA_SHORT_LENGTH=7
+            GIT_COMMIT_SHA=$(git rev-parse --short=$GIT_SHA_SHORT_LENGTH HEAD)
+            TEST_RUNNER_TAG=gcr.io/omisego-development/omg-js-testrunner:$GIT_COMMIT_SHA
 
             echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
             gcloud -q auth configure-docker
@@ -35,4 +36,4 @@ jobs:
             # add tag for omg-js sha that this image is using
             gcloud container images add-tag \
             $TEST_RUNNER_TAG \
-            gcr.io/omisego-development/omg-js-testrunner:with-omg-js-$(cat ./OMG_JS_SHA)
+            gcr.io/omisego-development/omg-js-testrunner:with-omg-js-$(cat ./OMG_JS_SHA | head -c $GIT_SHA_SHORT_LENGTH)
