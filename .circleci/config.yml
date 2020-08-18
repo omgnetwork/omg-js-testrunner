@@ -12,7 +12,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - boolafish/short_git
 
 jobs:
   publish:
@@ -32,8 +32,3 @@ jobs:
             docker build -t testrunner .
             docker tag testrunner $TEST_RUNNER_TAG
             docker push $TEST_RUNNER_TAG
-
-            # add tag for omg-js sha that this image is using
-            gcloud container images add-tag \
-            $TEST_RUNNER_TAG \
-            gcr.io/omisego-development/omg-js-testrunner:with-omg-js-$(cat ./OMG_JS_SHA | head -c $GIT_SHA_SHORT_LENGTH)
